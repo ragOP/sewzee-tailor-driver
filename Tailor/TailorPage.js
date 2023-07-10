@@ -8,7 +8,7 @@ const TailorPage = ({ navigation }) => {
   const handleSignIn = () => {
     // Perform sign-in logic here
     // For demo purposes, let's navigate to the TailorHomePage
-    navigation.navigate('TailorHomePage');
+    navigation.navigate('BottomNavigation');
   };
 
   return (

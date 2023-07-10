@@ -7,7 +7,7 @@ import MaterialIconsItem from '../Ui/MaterialIconsItem'
 import { Appbar } from "react-native-paper";
 
 
-const PartricularOrderDetails = ({ route }) => {
+const PartricularRideDetails = ({ route }) => {
   const { orderData } = route.params;
   const [isImageViewerVisible, setIsImageViewerVisible] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -33,7 +33,7 @@ const PartricularOrderDetails = ({ route }) => {
     setIsImageViewerVisible(true);
   };
   const handleAccept = () => {
-  
+    navigation.navigate('GoogleMaps', { address: orderData.address });
   };
 
   const handleReject = () => {
@@ -54,7 +54,7 @@ const PartricularOrderDetails = ({ route }) => {
         size={25}
       />
     </TouchableOpacity>
-    <Appbar.Content titleStyle={styles.header} title="Order Details" />
+    <Appbar.Content titleStyle={styles.header} title="Ride Details" />
   </PaperAppBar>
     <View style={styles.container}>
     <Image source={require('../Tailor/assets/Order.png')} style={styles.image}/>
@@ -171,4 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PartricularOrderDetails;
+export default PartricularRideDetails;

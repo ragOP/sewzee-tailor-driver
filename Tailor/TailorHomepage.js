@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import { Card } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
 import TailorMainPage from './TailorMainPage';
 
 const TailorHomepage = ({ navigation }) => {

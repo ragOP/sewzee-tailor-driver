@@ -8,7 +8,7 @@ const DriverPage = ({ navigation }) => {
   const handleSignIn = () => {
     // Perform sign-in logic here
     // For demo purposes, let's navigate to the TailorHomePage
-    navigation.navigate('DriverHomePage');
+    navigation.navigate('DriverBottomNavigation');
   };
 
   return (

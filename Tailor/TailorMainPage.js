@@ -1,58 +1,94 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Platform,
+} from 'react-native';
 import React, { useState } from 'react';
 import Carousel from 'react-native-snap-carousel';
-import { Card, IconButton } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Card } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
+import HapticFeedback from 'react-native-haptic-feedback';
+
 
 const TailorMainPage = ({ navigation }) => {
-  const [isOnline, setIsOnline] = useState(true);
-  const [selectedNavItem, setSelectedNavItem] = useState('Home'); // State variable to track the selected bar
-  const onlineImage = 'https://static.wixstatic.com/media/b6448e_4ed0d1b876fc420fb4a09578040611e2~mv2.png/v1/crop/x_143,y_363,w_713,h_273/fill/w_214,h_82,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/b6448e_4ed0d1b876fc420fb4a09578040611e2~mv2.png';
-  const offlineImage = 'https://previews.123rf.com/images/sarahdesign/sarahdesign1410/sarahdesign141000851/32210992-logout-icon.jpg';
+  const [online, setOnline] = useState(true);
 
-  React.useEffect(() => {
-    // Disable back button navigation
-    navigation.setOptions({
-      headerLeft: () => null,
-      headerTitle: () => (
-        <Image
-          source={{ uri: 'https://static.wixstatic.com/media/b6448e_4ed0d1b876fc420fb4a09578040611e2~mv2.png/v1/crop/x_143,y_363,w_713,h_273/fill/w_214,h_82,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/b6448e_4ed0d1b876fc420fb4a09578040611e2~mv2.png' }}
-          style={styles.logo}
-        />
-      ),
-      headerRight: () => (
-        <TouchableOpacity onPress={() => setIsOnline(!isOnline)}>
-          <View style={styles.onlineStatusContainer}>
-            <Image
-              source={isOnline ? { uri: onlineImage } : { uri: offlineImage }}
-              style={styles.onlineStatusImage}
-            />
-            <Text style={styles.onlineStatusText}>{isOnline ? 'Online' : 'Off1line'}</Text>
-          </View>
-        </TouchableOpacity>
-      ),
-    });
-  }, [isOnline]);
+  const onlineOffline = () => {
+    setOnline(!online);
+    if (online) {
+      if (Platform.OS === 'android') {
+        HapticFeedback.trigger('impactMedium', {
+          enableVibrateFallback: true,
+          ignoreAndroidSystemSettings: true
+        });
+      }
+      Toast.show({
+         type: 'success',
+        position: 'bottom',
+        text1: 'Welcome Back',
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+        textStyle: { fontFamily: 'Arial', fontSize: 22, fontWeight: 'bold' },
+        style: { backgroundColor: 'green', borderRadius: 10 },
+      });
+    } else {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Tailor Offline',
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+        textStyle: { fontFamily: 'Arial', fontSize: 16, fontWeight: 'bold' },
+        style: { backgroundColor: 'tomato', borderRadius: 10 },
+      });
+    }
+  };
+
+  const navigatePayment = () => {
+    navigation.navigate('Payment');
+  };
+
+  const navigatePickup = () => {
+    navigation.navigate('Pickup');
+  };
+
+  const navigateAllOrder = () => {
+    navigation.navigate('AllOrder');
+  };
 
   const carouselData = [
     { id: 1, title: 'Card 1', details: 'Card details 1' },
     { id: 2, title: 'Card 2', details: 'Card details 2' },
     { id: 3, title: 'Card 3', details: 'Card details 3' },
   ];
+  React.useEffect(() => {
+    // Disable back button navigation
+    navigation.setOptions({
+      headerLeft: () => null,
+      headerTitle: () => (
+        <Image
+          source={{
+            uri: 'https://static.wixstatic.com/media/b6448e_4ed0d1b876fc420fb4a09578040611e2~mv2.png/v1/crop/x_143,y_363,w_713,h_273/fill/w_214,h_82,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/b6448e_4ed0d1b876fc420fb4a09578040611e2~mv2.png',
+          }}
+          style={styles.logo}
+        />
+      ),
+    });
+  });
 
   const renderCard = ({ item }) => {
-    const dummyData = {
-      attribute1: 'Value 1',
-      attribute2: 'Value 2',
-      attribute3: 'Value 3',
-      // Add more dummy attributes as needed
-    };
-
-    const orderData = { ...dummyData, ...item }; // Merge dummy data with item data
-
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('ParticularOrderDetails', { orderData })}>
-        <Card style={styles.card}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('ParticularOrderDetails', { orderData: item })}>
+        <Card style={styles.cards}>
           <Card.Title title={item.title} />
           <Card.Content>
             <Text style={styles.cardDetails}>{item.details}</Text>
@@ -60,11 +96,6 @@ const TailorMainPage = ({ navigation }) => {
         </Card>
       </TouchableOpacity>
     );
-  };
-
-  const handleNavigation = (screen) => {
-    setSelectedNavItem(screen); // Update the selected bar
-    navigation.navigate(screen);
   };
 
   return (
@@ -78,64 +109,68 @@ const TailorMainPage = ({ navigation }) => {
         />
       </View>
 
-      <View style={styles.bottomNavigation}>
-        <TouchableOpacity onPress={() => handleNavigation('Home')} style={selectedNavItem === 'Home' ? styles.selectedNavItem : styles.navItem}>
-          <Image
-            source={require('./assets/home.png')}
-            style={styles.navigationItemIcon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigation('Payment')} style={selectedNavItem === 'Payment' ? styles.selectedNavItem : styles.navItem}>
-          <Image
-            source={require('./assets/home.png')}
-            style={styles.navigationItemIcon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigation('AllOrder')} style={selectedNavItem === 'AllOrder' ? styles.selectedNavItem : styles.navItem}>
-          <Image
-            source={require('./assets/home.png')} // Replace with your order icon image
-            style={styles.navigationItemIcon}
-          />
-        </TouchableOpacity>
-      </View>
+      <ScrollView>
+        <View style={styles.container2}>
+          <TouchableOpacity
+            onPress={onlineOffline}
+            style={[styles.card, online ? styles.cardOffline : styles.cardOnline]}>
+            <Text>{online ? 'Offline' : 'Online'}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={navigatePayment} style={styles.card}>
+            <Text>Payment</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.container2}>
+          <TouchableOpacity onPress={navigatePickup} style={styles.card}>
+            <Text>Pickup</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={navigateAllOrder} style={styles.card}>
+            <Text>View All Orders</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  card: {
+  cards: {
     marginVertical: 8,
     elevation: 4,
   },
   cardDetails: {
     fontSize: 16,
   },
-  bottomNavigation: {
+  container: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#f2f2f2',
-    paddingVertical: 10,
+    justifyContent: 'space-between',
+    backgroundColor: 'white',
+    borderRadius: 12,
   },
-  navItem: {
+  container2: {
     flex: 1,
-    alignItems: 'center',
-    opacity: 0.3,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
   },
-  selectedNavItem: {
+  card: {
     flex: 1,
-    alignItems: 'center',
-    opacity: 1,
-    borderBottomWidth: 1,
-    borderColor: 'black', // Customize the color for the selected bar
+    height: 150,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderColor: 'white',
+    borderWidth: 1,
+    marginHorizontal: 8,
+    padding: 16,
+    elevation: 10,
   },
-  navigationItemIcon: {
-    width: 24,
-    height: 24,
+  cardOnline: {
+    backgroundColor: 'green',
+  },
+  cardOffline: {
+    backgroundColor: 'red',
   },
   logo: {
     width: 120,
