@@ -11,11 +11,11 @@ const ProfileScreen = ({navigation}) => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => console.log('Button 2 pressed')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Support')}>
         <Text style={styles.buttonText}>Support & FAQ’s</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => console.log('Button 3 pressed')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('About')}>
         <Text style={styles.buttonText}>About </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button2} onPress={() => navigation.navigate('Login')}>

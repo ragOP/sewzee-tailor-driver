@@ -13,6 +13,8 @@ import LeaderBoard from './Tailor/LeaderBoard';
 import BottomNavigation from './Tailor/BottomNavigation';
 import DriverBottomNavigation from './Driver/DriverBottomNavigation';
 import PartricularRideDetails from './Driver/ParticularRideDetails';
+import Support from './screens/Support';
+import About from './screens/About';
 
 
 const Stack = createStackNavigator();
@@ -30,6 +32,9 @@ const AppNavigator = () => {
       <Stack.Screen name="AllOrder" component={AllOrder} />
       <Stack.Screen name="Payment" component={Payment} />
       <Stack.Screen name="Pickup" component={Pickup} />
+      <Stack.Screen name="Support" component={Support} />
+      <Stack.Screen name="About" component={About} />
+
       <Stack.Screen name="LeaderBoard" component={LeaderBoard} />
     </Stack.Navigator>
   );
