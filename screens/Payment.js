@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet ,Text,Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet ,Text,Image, TouchableOpacity, ScrollView } from 'react-native';
 import PaperAppBar from '../Ui/PaperAppBar'
 import MaterialIconsItem from '../Ui/MaterialIconsItem'
 import { Appbar } from "react-native-paper";
@@ -33,6 +33,7 @@ const Payment = ({navigation}) => {
      < Text style={styles.text2}>Process = ₹1110</Text> 
       </View>
     </View>
+    <ScrollView>
     <View style={styles.container}>
       {data.map(item => (
         <View key={item.id} style={styles.item}>
@@ -44,6 +45,7 @@ const Payment = ({navigation}) => {
         </View>
       ))}
     </View>
+    </ScrollView>
     <TouchableOpacity style={styles.withdraw} 
     onPress={() => navigation.goBack()}>
       <Text  style={styles.text}>Withdraw All</Text>
@@ -117,7 +119,8 @@ fontSize: 15,
     elevation: 5,
     zIndex: 99,
     marginLeft:8,
-    marginTop:200
+    marginBottom:10
+
   },
   container: {
   

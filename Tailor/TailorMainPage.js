@@ -12,6 +12,10 @@ import Carousel from 'react-native-snap-carousel';
 import { Card } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import HapticFeedback from 'react-native-haptic-feedback';
+import { Appbar } from "react-native-paper";
+
+
+
 
 
 const TailorMainPage = ({ navigation }) => {
@@ -73,6 +77,17 @@ const TailorMainPage = ({ navigation }) => {
     // Disable back button navigation
     navigation.setOptions({
       headerLeft: () => null,
+      headerRight: () => (
+        <TouchableOpacity
+        onPress={navigatePayment}>
+        <Appbar.Action
+                style={{ margin: 0, padding: 0 }}
+                icon="bell-outline"
+                onPress={() => navigation.navigate("TailorNotification")}
+              />
+        </TouchableOpacity>
+        
+      ),
       headerTitle: () => (
         <Image
           source={{
@@ -80,6 +95,7 @@ const TailorMainPage = ({ navigation }) => {
           }}
           style={styles.logo}
         />
+        
       ),
     });
   });

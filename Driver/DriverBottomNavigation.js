@@ -2,8 +2,9 @@ import { Image, StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from 'react'
 import PaperText from '../Ui/PaperText'
-import ProfileScreen from "../screens/ProfileScreen";
 import DriverHomePage from "./DriverHomePage";
+
+import DriverProfileScreen from "./DriverProfileScreen";
 
 const Tab = createBottomTabNavigator();
 const DriverBottomNavigation = () => {
@@ -48,8 +49,8 @@ const DriverBottomNavigation = () => {
       }}
     />
     <Tab.Screen
-      name="ProfileScreen"
-      component={ProfileScreen}
+      name="DriverProfile"
+      component={DriverProfileScreen}
       options={{
         tabBarIcon: ({ focused, color, size }) =>
           focused ? (

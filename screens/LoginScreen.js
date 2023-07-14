@@ -6,7 +6,6 @@ const LoginScreen = ({ navigation }) => {
     // Perform tailor login logic, e.g., authenticate the user
     navigation.navigate('TailorPage');
   };
-
   const handleDriverLogin = () => {
     // Perform driver login logic, e.g., authenticate the user
     navigation.navigate('DriverPage');

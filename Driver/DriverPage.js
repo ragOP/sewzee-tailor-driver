@@ -6,9 +6,8 @@ const DriverPage = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleSignIn = () => {
-    // Perform sign-in logic here
-    // For demo purposes, let's navigate to the TailorHomePage
-    navigation.navigate('DriverBottomNavigation');
+  
+    navigation.navigate('DriverForm');
   };
 
   return (

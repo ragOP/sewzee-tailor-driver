@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from 'react'
 import TailorHomepage from "./TailorHomepage";
 import PaperText from '../Ui/PaperText'
-import ProfileScreen from "../screens/ProfileScreen";
+import TailorProfileScreen from "./TailorProfileScreen";
 const Tab = createBottomTabNavigator();
 const BottomNavigation = () => {
   return (
@@ -47,8 +47,8 @@ const BottomNavigation = () => {
       }}
     />
     <Tab.Screen
-      name="ProfileScreen"
-      component={ProfileScreen}
+      name="TailorProfileScreen"
+      component={TailorProfileScreen}
       options={{
         tabBarIcon: ({ focused, color, size }) =>
           focused ? (

@@ -18,7 +18,7 @@ const Support = ({navigation}) => {
         size={25}
       />
     </TouchableOpacity>
-    <Appbar.Content titleStyle={styles.header} title="About" />
+    <Appbar.Content titleStyle={styles.header} title="Support" />
   </PaperAppBar>
   
     <View style={styles.container}>

@@ -12,6 +12,7 @@ import Carousel from 'react-native-snap-carousel';
 import { Card } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import HapticFeedback from 'react-native-haptic-feedback';
+import { Appbar } from "react-native-paper";
 
 
 const DriverMainPage = ({ navigation }) => {
@@ -73,6 +74,17 @@ const DriverMainPage = ({ navigation }) => {
     // Disable back button navigation
     navigation.setOptions({
       headerLeft: () => null,
+      headerRight: () => (
+        <TouchableOpacity
+        onPress={navigatePayment}>
+        <Appbar.Action
+                style={{ margin: 0, padding: 0 }}
+                icon="bell-outline"
+                onPress={() => navigation.navigate("DriverNotication")}
+              />
+        </TouchableOpacity>
+        
+      ),
       headerTitle: () => (
         <Image
           source={{
@@ -86,6 +98,7 @@ const DriverMainPage = ({ navigation }) => {
   const renderCard = ({ item }) => {
     return (
       <TouchableOpacity
+      activeOpacity={1}
         onPress={() => navigation.navigate('ParticularRideDetails', { orderData: item })}>
         <Card style={styles.cards}>
           <Card.Title title={item.title} />
@@ -111,19 +124,26 @@ const DriverMainPage = ({ navigation }) => {
       <ScrollView>
         <View style={styles.container2}>
           <TouchableOpacity
+          activeOpacity={1}
             onPress={onlineOffline}
             style={[styles.card, online ? styles.cardOffline : styles.cardOnline]}>
             <Text>{online ? 'Offline' : 'Online'}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={navigatePayment} style={styles.card}>
+          <TouchableOpacity
+          activeOpacity={1}
+          onPress={navigatePayment} style={styles.card}>
             <Text>Payment</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.container2}>
-          <TouchableOpacity onPress={navigatePickup} style={styles.card}>
+          <TouchableOpacity 
+          activeOpacity={1}
+          onPress={navigatePickup} style={styles.card}>
             <Text>Pickup</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={navigateAllOrder} style={styles.card}>
+          <TouchableOpacity
+          activeOpacity={1}
+           onPress={navigateAllOrder} style={styles.card}>
             <Text>View All Orders</Text>
           </TouchableOpacity>
         </View>

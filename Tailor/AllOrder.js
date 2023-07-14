@@ -1,4 +1,4 @@
-import { View, StyleSheet ,Text,Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet ,Text,Image, TouchableOpacity, ScrollView ,  RefreshControl,} from 'react-native';
 import PaperAppBar from '../Ui/PaperAppBar'
 import MaterialIconsItem from '../Ui/MaterialIconsItem'
 import { Appbar } from "react-native-paper";
@@ -6,6 +6,14 @@ import React, { useState } from 'react';
 
 const AllOrder = ({navigation}) => {
   const [activeTab, setActiveTab] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1500);
+  }, []);
   const tabs = [
     { id: 0, title: 'All Orders', buttons: [
       { label: 'Order No.- 71 | Kurta & Salwar', image: require('../Tailor/assets/Order.png') },
@@ -45,7 +53,7 @@ const AllOrder = ({navigation}) => {
   <View style={styles.tabContainer}>
         {tabs.map((tab, index) => (
           <TouchableOpacity
-          
+          activeOpacity={1}
             key={tab.id}
             style={[styles.tabButton, activeTab === index && styles.activeTab]}
             onPress={() => handleTabPress(index)}
@@ -54,10 +62,14 @@ const AllOrder = ({navigation}) => {
           </TouchableOpacity>
         ))}
       </View>
-      <ScrollView>
+      <ScrollView
+      contentContainerStyle={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}   tintColor="#333"/> }>
      
         {tabs[activeTab].buttons.map((button, index,item) => (
           <TouchableOpacity key={index} style={styles.button}
+          activeOpacity={1}
           onPress={() => navigation.navigate('ParticularOrderDetails', { orderData: item})}>
             <Image source={button.image} style={styles.image} />
             <Text style={styles.buttonText}>{button.label}</Text>

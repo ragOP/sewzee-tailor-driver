@@ -113,13 +113,7 @@ const LeaderBoard = ({navigation}) => {
 export default LeaderBoard;
 const styles = StyleSheet.create({
   container: {
-    minHeight: 360,
-  },
-  dayContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    aspectRatio: 1,
+    flex:1
   },
   value: {
     fontSize: 12,
@@ -129,7 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
+    width: '96%',
     marginVertical: 10,
     paddingHorizontal: 10,
     paddingVertical: 10,
@@ -140,6 +134,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 5,
+    marginRight:12
   },
   tailorContainer2: {
     flexDirection: 'row',

@@ -32,8 +32,8 @@ const PartricularRideDetails = ({ route }) => {
     setCurrentImageIndex(index);
     setIsImageViewerVisible(true);
   };
-  const handleAccept = () => {
-    navigation.navigate('GoogleMaps', { address: orderData.address });
+  const handleMeasurement = () => {
+    navigation.navigate('Measurement');
   };
 
   const handleReject = () => {
@@ -80,7 +80,7 @@ const PartricularRideDetails = ({ route }) => {
       
       {/* Accept and Reject buttons */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.acceptButton} onPress={handleAccept}>
+        <TouchableOpacity style={styles.acceptButton} onPress={handleMeasurement}>
           <Text style={styles.buttonText}>Accept</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.rejectButton} onPress={handleReject}>
