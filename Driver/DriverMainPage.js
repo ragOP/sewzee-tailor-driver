@@ -5,17 +5,16 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Platform
+  Platform,
 } from 'react-native';
-import React, { useState } from 'react';
-import Carousel from 'react-native-snap-carousel';
-import { Card } from 'react-native-paper';
+import React, {useState} from 'react';
+
 import Toast from 'react-native-toast-message';
 import HapticFeedback from 'react-native-haptic-feedback';
-import { Appbar } from "react-native-paper";
+import {Appbar} from 'react-native-paper';
+import Ongoing from './Ongoing';
 
-
-const DriverMainPage = ({ navigation }) => {
+const DriverMainPage = ({navigation}) => {
   const [online, setOnline] = useState(true);
 
   const onlineOffline = () => {
@@ -24,19 +23,19 @@ const DriverMainPage = ({ navigation }) => {
       if (Platform.OS === 'android') {
         HapticFeedback.trigger('impactMedium', {
           enableVibrateFallback: true,
-          ignoreAndroidSystemSettings: true
+          ignoreAndroidSystemSettings: true,
         });
       }
       Toast.show({
-         type: 'success',
+        type: 'success',
         position: 'bottom',
         text1: 'Welcome Back',
         visibilityTime: 2000,
         autoHide: true,
         topOffset: 30,
         bottomOffset: 40,
-        textStyle: { fontFamily: 'Arial', fontSize: 22, fontWeight: 'bold' },
-        style: { backgroundColor: 'green', borderRadius: 10 },
+        textStyle: {fontFamily: 'Arial', fontSize: 22, fontWeight: 'bold'},
+        style: {backgroundColor: 'green', borderRadius: 10},
       });
     } else {
       Toast.show({
@@ -47,8 +46,8 @@ const DriverMainPage = ({ navigation }) => {
         autoHide: true,
         topOffset: 30,
         bottomOffset: 40,
-        textStyle: { fontFamily: 'Arial', fontSize: 16, fontWeight: 'bold' },
-        style: { backgroundColor: 'tomato', borderRadius: 10 },
+        textStyle: {fontFamily: 'Arial', fontSize: 16, fontWeight: 'bold'},
+        style: {backgroundColor: 'tomato', borderRadius: 10},
       });
     }
   };
@@ -61,29 +60,27 @@ const DriverMainPage = ({ navigation }) => {
     navigation.navigate('Pickup');
   };
 
-  const navigateAllOrder = () => {
-    navigation.navigate('AllOrder');
+  const navigateAllRide = () => {
+    navigation.navigate('AllRide');
   };
 
-  const carouselData = [
-    { id: 1, title: 'Card 1', details: 'Card details 1' },
-    { id: 2, title: 'Card 2', details: 'Card details 2' },
-    { id: 3, title: 'Card 3', details: 'Card details 3' },
-  ];
+  // const carouselData = [
+  //   { id: 1, title: 'Card 1', details: 'Card details 1' },
+  //   { id: 2, title: 'Card 2', details: 'Card details 2' },
+  //   { id: 3, title: 'Card 3', details: 'Card details 3' },
+  // ];
   React.useEffect(() => {
     // Disable back button navigation
     navigation.setOptions({
       headerLeft: () => null,
       headerRight: () => (
-        <TouchableOpacity
-        onPress={navigatePayment}>
-        <Appbar.Action
-                style={{ margin: 0, padding: 0 }}
-                icon="bell-outline"
-                onPress={() => navigation.navigate("DriverNotication")}
-              />
+        <TouchableOpacity onPress={navigatePayment}>
+          <Appbar.Action
+            style={{margin: 0, padding: 0}}
+            icon="bell-outline"
+            onPress={() => navigation.navigate('DriverNotication')}
+          />
         </TouchableOpacity>
-        
       ),
       headerTitle: () => (
         <Image
@@ -95,61 +92,63 @@ const DriverMainPage = ({ navigation }) => {
       ),
     });
   });
-  const renderCard = ({ item }) => {
-    return (
-      <TouchableOpacity
-      activeOpacity={1}
-        onPress={() => navigation.navigate('ParticularRideDetails', { orderData: item })}>
-        <Card style={styles.cards}>
-          <Card.Title title={item.title} />
-          <Card.Content>
-            <Text style={styles.cardDetails}>{item.details}</Text>
-          </Card.Content>
-        </Card>
-      </TouchableOpacity>
-    );
-  };
+  // const renderCard = ({ item }) => {
+  //   return (
+  //     <TouchableOpacity
+  //     activeOpacity={1}
+  //       onPress={() => navigation.navigate('ParticularRideDetails', { orderData: item })}>
+  //       <Card style={styles.cards}>
+  //         <Card.Title title={item.title} />
+  //         <Card.Content>
+  //           <Text style={styles.cardDetails}>{item.details}</Text>
+  //         </Card.Content>
+  //       </Card>
+  //     </TouchableOpacity>
+
+  //   );
+  // };
 
   return (
     <>
       <View style={styles.container}>
-        <Carousel
-          data={carouselData}
-          renderItem={renderCard}
-          sliderWidth={300}
-          itemWidth={250}
-        />
+        <Ongoing navigation={navigation} />
       </View>
 
       <ScrollView>
         <View style={styles.container2}>
           <TouchableOpacity
-          activeOpacity={1}
+            activeOpacity={1}
             onPress={onlineOffline}
-            style={[styles.card, online ? styles.cardOffline : styles.cardOnline]}>
+            style={[
+              styles.card,
+              online ? styles.cardOffline : styles.cardOnline,
+            ]}>
             <Text>{online ? 'Offline' : 'Online'}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-          activeOpacity={1}
-          onPress={navigatePayment} style={styles.card}>
+            activeOpacity={1}
+            onPress={navigatePayment}
+            style={styles.card}>
             <Text>Payment</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.container2}>
-          <TouchableOpacity 
-          activeOpacity={1}
-          onPress={navigatePickup} style={styles.card}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={navigatePickup}
+            style={styles.card}>
             <Text>Pickup</Text>
           </TouchableOpacity>
           <TouchableOpacity
-          activeOpacity={1}
-           onPress={navigateAllOrder} style={styles.card}>
+            activeOpacity={1}
+            onPress={navigateAllRide}
+            style={styles.card}>
             <Text>View All Orders</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
 
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+      <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
 };
@@ -162,17 +161,22 @@ const styles = StyleSheet.create({
   cardDetails: {
     fontSize: 16,
   },
+
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: 'white',
+    backgroundColor: '#e7e3fa',
+    width: '100%',
+    height: '45%',
     borderRadius: 12,
   },
   container2: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
+    paddingTop: 10,
+    paddingBottom: 5,
+    // height:'60%',
   },
   card: {
     flex: 1,
@@ -196,7 +200,6 @@ const styles = StyleSheet.create({
     height: 40,
     resizeMode: 'contain',
   },
-  
 });
 
 export default DriverMainPage;

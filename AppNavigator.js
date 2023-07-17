@@ -21,6 +21,7 @@ import DriverForm from './Driver/DriverForm';
 import DriverCompleteProfile from './Driver/DriverCompleteProfile';
 import TailorNotification from './Tailor/TailorNotification';
 import DriverNotification from './Driver/DriverNotification';
+import AllRide from './Driver/AllRide';
 
 
 const Stack = createStackNavigator();
@@ -46,6 +47,7 @@ const AppNavigator = () => {
       <Stack.Screen name="DriverComplete" component={DriverCompleteProfile} />
       <Stack.Screen name="Support" component={Support} />
       <Stack.Screen name="About" component={About} />
+      <Stack.Screen name="AllRide" component={AllRide} />
       <Stack.Screen name="LeaderBoard" component={LeaderBoard} />
       <Stack.Screen name="TailorNotification" component={TailorNotification} />
       <Stack.Screen name="DriverNotication" component={DriverNotification} />
