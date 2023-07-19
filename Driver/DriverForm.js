@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -6,10 +6,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-
+  Image,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Header from '../screens/Header';
+import ImagePicker from 'react-native-image-crop-picker';
+import Toast from 'react-native-toast-message';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ActionSheet from 'react-native-actionsheet';
 
 const DriverForm = ({navigation}) => {
   const [profileData, setProfileData] = useState({
@@ -20,25 +24,107 @@ const DriverForm = ({navigation}) => {
     locality: '',
     city: '',
     state: '',
-    license:'',
-    aadhar:''
+    license: '',
+    aadhar: '',
   });
-    const [isChecked, setIsChecked] = useState(false);
-  
-    const handleCheckboxChange = () => {
-      setIsChecked(!isChecked);
-    };
-  
+  const [isChecked, setIsChecked] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   const handleContinue = () => {
     // Perform sign-in logic here
     navigation.navigate('DriverBottomNavigation');
   };
+  const actionSheetOptions = isImageUploaded
+    ? ['From photos', 'Remove photo', 'Cancel']
+    : ['From photos', 'Cancel'];
+  const showToast = (type, text1, text2) => {
+    Toast.show({
+      type: type,
+      text1: text1,
+      text2: text2,
 
+      visibilityTime: 2000,
+      autoHide: true,
+    });
+  };
+  const actionSheetRef = useRef(null);
+
+  const handleOpenBottomSheet = () => {
+    actionSheetRef.current.show();
+  };
+
+  const handleImageUpload = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 300,
+      cropping: true,
+    })
+      .then(image => {
+        setProfilePicture({
+          uri: image.path,
+          width: image.width,
+          height: image.height,
+        });
+        setIsImageUploaded(true);
+        showToast(
+          'success',
+          'Image Uploaded',
+          'Profile picture updated successfully!',
+        );
+      })
+      .catch(error => {
+        showToast(
+          'error',
+          'Image Upload Failed',
+          'Failed to upload profile picture.',
+        );
+      });
+  };
+  const handleRemoveImage = () => {
+    setProfilePicture(null);
+    setIsImageUploaded(false);
+  };
+
+  const renderAvatar = () => {
+    if (profilePicture) {
+      return (
+        <>
+          <Image source={profilePicture} style={styles.profilePicture} />
+          {isImageUploaded && (
+            <TouchableOpacity onPress={handleOpenBottomSheet}>
+              <Text style={styles.uploadText}>Edit Image</Text>
+            </TouchableOpacity>
+          )}
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Icon
+            name="user"
+            size={100}
+            style={{
+              padding: 5,
+            }}
+            color="blue"
+          />
+          <TouchableOpacity onPress={handleOpenBottomSheet}>
+            <Text style={styles.uploadText}>Upload Picture</Text>
+          </TouchableOpacity>
+        </>
+      );
+    }
+  };
   return (
     <>
       <Header text="Profile" />
       <ScrollView contentContainerStyle={styles.container}>
+        <View>{renderAvatar()}</View>
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
@@ -102,37 +188,56 @@ const DriverForm = ({navigation}) => {
               setProfileData({...profileData, aadhar: text})
             }
           />
-           <View style={styles.CheckboxContainer}>
-        <CheckBox
-          tintColors={{ true: '#7d5ffe' }}
-          value={isChecked}
-          onValueChange={handleCheckboxChange}
-        />
-        <Text style={styles.label}>Do you have a motorcycle?*</Text>
-      </View>
-      {isChecked && (
-        <>
-        <TextInput
-          style={styles.input}
-          placeholder="Driving License*"
-          value={profileData.license}
-          onChangeText={(text) =>
-            setProfileData({ ...profileData, license: text })
-          }
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your bike number plate*"
-          value={profileData.license}
-          onChangeText={(text) =>
-            setProfileData({ ...profileData, license: text })
-          }
-        />
-        </>
-      )}
+          <View style={styles.CheckboxContainer}>
+            <CheckBox
+              tintColors={{true: '#7d5ffe'}}
+              value={isChecked}
+              onValueChange={handleCheckboxChange}
+            />
+            <Text style={styles.label}>Do you have a motorcycle?*</Text>
+          </View>
+          {isChecked && (
+            <>
+              <TextInput
+                style={styles.input}
+                placeholder="Driving License*"
+                value={profileData.license}
+                onChangeText={text =>
+                  setProfileData({...profileData, license: text})
+                }
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your bike number plate*"
+                value={profileData.license}
+                onChangeText={text =>
+                  setProfileData({...profileData, license: text})
+                }
+              />
+            </>
+          )}
         </View>
-
       </ScrollView>
+      <ActionSheet
+        ref={actionSheetRef}
+        title={'Choose an option'}
+        options={actionSheetOptions}
+        cancelButtonIndex={actionSheetOptions.length - 1}
+        onPress={index => {
+          if (isImageUploaded) {
+            if (index === 0) {
+              handleImageUpload();
+            } else if (index === 1) {
+              handleRemoveImage();
+            }
+          } else {
+            if (index === 0) {
+              handleImageUpload();
+            }
+          }
+        }}
+      />
+      <Toast ref={ref => Toast.setRef(ref)} />
       <TouchableOpacity style={styles.continue} onPress={handleContinue}>
         <Text style={styles.text}>CONTINUE</Text>
       </TouchableOpacity>
@@ -145,7 +250,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingTop: 25,
+    paddingTop: 15,
   },
   formContainer: {
     width: '96%',
@@ -179,11 +284,37 @@ const styles = StyleSheet.create({
   CheckboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom:15
+    marginBottom: 15,
   },
   label: {
     marginLeft: 8,
-    fontSize:16
+    fontSize: 16,
+  },
+  profilePicture: {
+    width: 105,
+    height: 105,
+    borderRadius: 75,
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  placeholder: {
+    width: 110,
+    height: 110,
+    borderRadius: 75,
+    backgroundColor: 'white',
+    marginBottom: 10,
+    borderWidth: 0.7,
+    paddingLeft: 19,
+    borderColor: '#7d5ffe',
+    alignItems: 'center',
+  },
+  editText: {
+    fontSize: 18,
+    color: '#7d5ffe',
+  },
+  uploadText: {
+    fontSize: 18,
+    color: '#7d5ffe',
   },
 });
 

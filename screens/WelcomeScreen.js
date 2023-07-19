@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 
-const LoginScreen = ({ navigation }) => {
+const WelcomeScreen = ({ navigation }) => {
   const handleTailorLogin = () => {
     // Perform tailor login logic, e.g., authenticate the user
-    navigation.navigate('TailorPage');
+    navigation.navigate('TailorLogin');
   };
   const handleDriverLogin = () => {
     // Perform driver login logic, e.g., authenticate the user
-    navigation.navigate('DriverPage');
+    navigation.navigate('DriverLogin');
   };
 
   return (
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default WelcomeScreen;

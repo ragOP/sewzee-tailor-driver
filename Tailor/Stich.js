@@ -12,7 +12,7 @@ import PaperAppBar from '../Ui/PaperAppBar';
 import MaterialIconsItem from '../Ui/MaterialIconsItem';
 import {Appbar} from 'react-native-paper';
 
-const GenderPreferences = ({navigation}) => {
+const Stich = ({navigation}) => {
   const [gender, setGender] = useState('');
   const [checkedItems, setCheckedItems] = useState([]);
   const [basePrices, setBasePrices] = useState([]);
@@ -54,27 +54,28 @@ const GenderPreferences = ({navigation}) => {
             size={25}
           />
         </TouchableOpacity>
-        <Appbar.Content titleStyle={styles.header} title="Gender Prefences" />
+        <Appbar.Content titleStyle={styles.header} title="Stich  Prefences" />
       </PaperAppBar>
       <ScrollView>
         <View style={styles.container}>
+        <Text style={{fontSize:20,fontWeight:'bold',color: '#333',}}>PRICING</Text>
           <View style={styles.radioContainer}>
             <CheckBox
-              tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+              tintColors={{true: '#7d5ffe'}}
               value={gender === 'men'}
               onValueChange={() => handleGenderChange('men')}
             />
             <Text style={styles.radioLabel}>Men</Text>
 
             <CheckBox
-              tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+              tintColors={{true: '#7d5ffe'}}
               value={gender === 'women'}
               onValueChange={() => handleGenderChange('women')}
             />
             <Text style={styles.radioLabel}>Women</Text>
 
             <CheckBox
-              tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+              tintColors={{true: '#7d5ffe'}}
               value={gender === 'both'}
               onValueChange={() => handleGenderChange('both')}
             />
@@ -84,7 +85,7 @@ const GenderPreferences = ({navigation}) => {
           {gender === 'men' && (
             <View style={styles.checkboxContainer}>
               <CheckBox
-                tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+                tintColors={{true: '#7d5ffe'}}
                 value={checkedItems[0] || false}
                 onValueChange={() => handleCheckboxChange(0)}
               />
@@ -94,7 +95,7 @@ const GenderPreferences = ({navigation}) => {
                 <>
                   <View style={styles.checkboxContainer}>
                     <CheckBox
-                      tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+                      tintColors={{true: '#7d5ffe'}}
                       value={checkedItems[1] || false}
                       onValueChange={() => handleCheckboxChange(1)}
                     />
@@ -114,7 +115,7 @@ const GenderPreferences = ({navigation}) => {
                           }}
                         />
                         <CheckBox
-                          tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+                          tintColors={{true: '#7d5ffe'}}
                           value={checkedItems[2] || false}
                           onValueChange={() => handleCheckboxChange(2)}
                         />
@@ -152,13 +153,75 @@ const GenderPreferences = ({navigation}) => {
                   </View>
                 </>
               )}
+              {checkedItems[0] && (
+                <>
+                  <View style={styles.checkboxContainer}>
+                    <CheckBox
+                      tintColors={{true: '#7d5ffe'}}
+                      value={checkedItems[3] || false}
+                      onValueChange={() => handleCheckboxChange(3)}
+                    />
+                    <Text style={styles.checkboxLabel}>Pathani Kurta</Text>
+
+                    {checkedItems[3] && (
+                      <>
+                        <TextInput
+                          style={styles.input}
+                          placeholder="Enter Base Price"
+                          keyboardType="numeric"
+                          value={basePrices[2]}
+                          onChangeText={text => {
+                            const newBasePrices = [...basePrices];
+                            newBasePrices[2] = text;
+                            setBasePrices(newBasePrices);
+                          }}
+                        />
+                        <CheckBox
+                          tintColors={{true: '#7d5ffe'}}
+                          value={checkedItems[4] || false}
+                          onValueChange={() => handleCheckboxChange(4)}
+                        />
+                        <Text style={styles.checkboxLabel}>Length</Text>
+                        {checkedItems[4] && (
+                          <>
+                            <Text style={styles.checkboxLabel}>Short</Text>
+                            <TextInput
+                              style={styles.input}
+                              placeholder="Enter Custom Price"
+                              keyboardType="numeric"
+                              value={customPrices[3]}
+                              onChangeText={text => {
+                                const newCustomPrices = [...customPrices];
+                                newCustomPrices[3] = text;
+                                setCustomPrices(newCustomPrices);
+                              }}
+                            />
+                            <Text style={styles.checkboxLabel}>Long</Text>
+                            <TextInput
+                              style={styles.input}
+                              placeholder="Enter Custom Price"
+                              keyboardType="numeric"
+                              value={customPrices[2]}
+                              onChangeText={text => {
+                                const newCustomPrices = [...customPrices];
+                                newCustomPrices[2] = text;
+                                setCustomPrices(newCustomPrices);
+                              }}
+                            />
+                          </>
+                        )}
+                      </>
+                    )}
+                  </View>
+                </>
+              )}
             </View>
           )}
 
           {gender === 'women' && (
             <View style={styles.checkboxContainer}>
               <CheckBox
-                tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+                tintColors={{true: '#7d5ffe'}}
                 value={checkedItems[0] || false}
                 onValueChange={() => handleCheckboxChange(0)}
               />
@@ -190,7 +253,7 @@ const GenderPreferences = ({navigation}) => {
                   />
                   <View style={styles.checkboxContainer}>
                     <CheckBox
-                      tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+                      tintColors={{true: '#7d5ffe'}}
                       value={checkedItems[1] || false}
                       onValueChange={() => handleCheckboxChange(1)}
                     />
@@ -219,7 +282,7 @@ const GenderPreferences = ({navigation}) => {
             <View>
               <View style={styles.checkboxContainer}>
                 <CheckBox
-                  tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+                  tintColors={{true: '#7d5ffe'}}
                   value={checkedItems[0] || false}
                   onValueChange={() => handleCheckboxChange(0)}
                 />
@@ -240,7 +303,7 @@ const GenderPreferences = ({navigation}) => {
                     />
                     <View style={styles.checkboxContainer}>
                       <CheckBox
-                        tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+                        tintColors={{true: '#7d5ffe'}}
                         value={checkedItems[1] || false}
                         onValueChange={() => handleCheckboxChange(1)}
                       />
@@ -262,7 +325,7 @@ const GenderPreferences = ({navigation}) => {
                     </View>
                     <View style={styles.checkboxContainer}>
                       <CheckBox
-                        tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+                        tintColors={{true: '#7d5ffe'}}
                         value={checkedItems[2] || false}
                         onValueChange={() => handleCheckboxChange(2)}
                       />
@@ -284,7 +347,7 @@ const GenderPreferences = ({navigation}) => {
                     </View>
                     <View style={styles.checkboxContainer}>
                       <CheckBox
-                        tintColors={{true: '#7d5ffe', false: '#7d5ffe'}}
+                        tintColors={{true: '#7d5ffe'}}
                         value={checkedItems[3] || false}
                         onValueChange={() => handleCheckboxChange(3)}
                       />
@@ -324,6 +387,7 @@ const styles = StyleSheet.create({
     padding: 20,
     // backgroundColor: 'white',
     alignItems: 'center',
+   
   },
   title: {
     fontSize: 24,
@@ -362,6 +426,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 5,
     marginTop: 5,
+    flexDirection:'row'
   },
   continue: {
     alignItems: 'center',
@@ -381,6 +446,13 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     marginBottom: 10,
   },
+  backButton: {
+    padding: 5,
+  },
+  header: {
+  fontFamily: "Poppins-SemiBold",
+    fontSize: 20,
+  },
 });
 
-export default GenderPreferences;
+export default Stich;

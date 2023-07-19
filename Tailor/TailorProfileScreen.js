@@ -35,7 +35,7 @@ const TailorProfileScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-      activeOpacity={1}
+        activeOpacity={1}
         style={styles.button}
         onPress={() => navigation.navigate('Complete')}>
         <Text style={styles.buttonText}>My Profile</Text>
@@ -49,8 +49,8 @@ const TailorProfileScreen = ({navigation}) => {
       <TouchableOpacity
         activeOpacity={1}
         style={styles.button}
-        onPress={() => navigation.navigate('Gender')}>
-        <Text style={styles.buttonText}>Gender Prefences</Text>
+        onPress={() => navigation.navigate('Stich')}>
+        <Text style={styles.buttonText}>Stich Prefences</Text>
       </TouchableOpacity>
       <TouchableOpacity
         activeOpacity={1}
@@ -68,7 +68,7 @@ const TailorProfileScreen = ({navigation}) => {
         activeOpacity={1}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => navigation.navigate('Welcome')}
         style={[styles.buttons, isPressed && buttonScale]}>
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
@@ -90,9 +90,9 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     width: '95%',
     height: 80,
-   justifyContent:'center',
-   
-
+    justifyContent: 'center',
+    borderRightWidth: 10,
+    borderRightColor: '#7D5FFE',
   },
   button2: {
     backgroundColor: 'white',
@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     marginLeft: 10,
-    
   },
   image: {
     padding: 10,
@@ -137,6 +136,6 @@ const styles = StyleSheet.create({
     color: 'Black',
     fontSize: 18,
     fontWeight: 'bold',
-    marginLeft:20
+    marginLeft: 20,
   },
 });

@@ -169,7 +169,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
+    paddingTop: 10,
+    paddingBottom: 5,
   },
   card: {
     flex: 1,
