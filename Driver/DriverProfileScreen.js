@@ -55,7 +55,7 @@ const DriverProfileScreen = ({navigation}) => {
         activeOpacity={1}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => navigation.navigate('Welcome')}
         style={[styles.buttons, isPressed && buttonScale]}>
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>

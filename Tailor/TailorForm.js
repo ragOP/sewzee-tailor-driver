@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -6,9 +6,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Image,
+ 
 } from 'react-native';
-
 import Header from '../screens/Header';
+import ImagePicker from 'react-native-image-crop-picker';
+import Toast from 'react-native-toast-message';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ActionSheet from 'react-native-actionsheet';
 
 const TailorForm = ({navigation}) => {
   const [profileData, setProfileData] = useState({
@@ -21,16 +26,98 @@ const TailorForm = ({navigation}) => {
     city: '',
     state: '',
   });
-
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
   const handleContinue = () => {
     // Perform sign-in logic here
     navigation.navigate('BottomNavigation');
   };
+  const actionSheetOptions = isImageUploaded
+  ? ['From photos', 'Remove photo', 'Cancel']
+  : ['From photos', 'Cancel'];
+const showToast = (type, text1, text2) => {
+  Toast.show({
+    type: type,
+    text1: text1,
+    text2: text2,
 
+    visibilityTime: 2000,
+    autoHide: true,
+  });
+};
+const actionSheetRef = useRef(null);
+
+const handleOpenBottomSheet = () => {
+  actionSheetRef.current.show();
+};
+
+const handleImageUpload = () => {
+  ImagePicker.openPicker({
+    width: 300,
+    height: 300,
+    cropping: true,
+  })
+    .then(image => {
+      setProfilePicture({
+        uri: image.path,
+        width: image.width,
+        height: image.height,
+      });
+      setIsImageUploaded(true);
+      showToast(
+        'success',
+        'Image Uploaded',
+        'Profile picture updated successfully!',
+      );
+    })
+    .catch(error => {
+      showToast(
+        'error',
+        'Image Upload Failed',
+        'Failed to upload profile picture.',
+      );
+    });
+};
+const handleRemoveImage = () => {
+  setProfilePicture(null);
+  setIsImageUploaded(false);
+};
+
+const renderAvatar = () => {
+  if (profilePicture) {
+    return (
+      <>
+        <Image source={profilePicture} style={styles.profilePicture} />
+        {isImageUploaded && (
+          <TouchableOpacity onPress={handleOpenBottomSheet}>
+            <Text style={styles.editText}>Edit Image</Text>
+          </TouchableOpacity>
+        )}
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Icon
+          name="user"
+          size={100}
+          style={styles.placeholder}
+          color='#7d5ffe'
+        />
+        <TouchableOpacity onPress={handleOpenBottomSheet}>
+          <Text style={styles.uploadText}>Upload Picture</Text>
+        </TouchableOpacity>
+      </>
+    );
+  }
+};
   return (
     <>
       <Header text="Profile" />
       <ScrollView contentContainerStyle={styles.container}>
+      <View>
+          {renderAvatar()}
+        </View>
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
@@ -95,6 +182,26 @@ const TailorForm = ({navigation}) => {
             }
           />
         </View>
+        <ActionSheet
+        ref={actionSheetRef}
+        title={'Choose an option'}
+        options={actionSheetOptions}
+        cancelButtonIndex={actionSheetOptions.length - 1}
+        onPress={index => {
+          if (isImageUploaded) {
+            if (index === 0) {
+              handleImageUpload(); 
+            } else if (index === 1) {
+              handleRemoveImage(); 
+            }
+          } else {
+            if (index === 0) {
+              handleImageUpload(); 
+            }
+          }
+        }}
+      />
+        <Toast ref={ref => Toast.setRef(ref)} />
       </ScrollView>
       <TouchableOpacity style={styles.continue} onPress={handleContinue}>
         <Text style={styles.text}>CONTINUE</Text>
@@ -108,7 +215,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingTop: 55,
+    paddingTop: 15,
   },
   formContainer: {
     width: '96%',
@@ -140,6 +247,36 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 10,
   },
+  profilePicture: {
+    width: 105,
+    height: 105,
+    borderRadius: 75,
+    marginBottom: 10,
+    alignItems:'center',
+
+  },
+  placeholder: {
+    width: 110,
+    height: 110,
+    borderRadius: 75,
+    backgroundColor: 'white',
+    marginBottom: 10,
+    borderWidth: 0.7,
+    paddingLeft:19,
+    borderColor:'#7d5ffe',
+    alignItems:'center'
+  },
+  editText:{
+    fontSize:18,
+    color:'#7d5ffe'
+
+  },
+  uploadText:{
+    fontSize:18,
+    color:'#7d5ffe',
+   
+
+  }
 });
 
 export default TailorForm;
