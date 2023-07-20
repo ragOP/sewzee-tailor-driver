@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity,Image } from 'react-native';
 import PaperText from "../Ui/PaperText";
 const DriverLogin = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -11,17 +11,14 @@ const navigateOtp = () => {
   };
 
   return (
-    
+    <>
+    <Image source={require("./assets/Driver.jpg")} style={styles.image}/>
+
     <View style={styles.container}>
-      <PaperText
-          text="Welcome"
-          variant="headlineMedium"
-          fontStyling={styles.heading}
-        />
         <PaperText
           text="Please Enter Your Mobile No, Below"
           variant="titleMedium"
-          fontStyling={styles.title}
+          fontStyling={styles.heading}
         />
       <View style={styles.inputContainer}>
       <Text style={styles.inputLabel}>+91 |</Text>
@@ -42,13 +39,16 @@ const navigateOtp = () => {
       >
         <Text style={styles.loginButtonText}>Get OTP</Text>
       </TouchableOpacity>
+   
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: "75%",
+    // marginTop: "auto",
     backgroundColor: '#fff',
     padding: 15,
     
@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Bold",
     textAlign: "center",
     color: "#7D5FFE",
-    marginBottom: 10,
-    marginTop: 150,
+    // marginBottom: 10,
+    // marginTop: 150,
   },
   title: {
     fontFamily: "Poppins-Bold",
@@ -97,6 +97,12 @@ const styles = StyleSheet.create({
   loginButtonText: {
     color: 'white',
     fontSize: 18,
+  },
+  image: {
+   
+      width: "100%",
+      height: "25%",
+      resizeMode: "cover"
   },
 });
 

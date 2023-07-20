@@ -47,8 +47,7 @@ const DriverForm = ({navigation}) => {
       type: type,
       text1: text1,
       text2: text2,
-
-      visibilityTime: 2000,
+      visibilityTime: 1000,
       autoHide: true,
     });
   };
@@ -97,7 +96,7 @@ const DriverForm = ({navigation}) => {
           <Image source={profilePicture} style={styles.profilePicture} />
           {isImageUploaded && (
             <TouchableOpacity onPress={handleOpenBottomSheet}>
-              <Text style={styles.uploadText}>Edit Image</Text>
+              <Text style={styles.editText}>Edit Image</Text>
             </TouchableOpacity>
           )}
         </>
@@ -108,10 +107,9 @@ const DriverForm = ({navigation}) => {
           <Icon
             name="user"
             size={100}
-            style={{
-              padding: 5,
-            }}
-            color="blue"
+            style={styles.placeholder
+            }
+            color='#7d5ffe'
           />
           <TouchableOpacity onPress={handleOpenBottomSheet}>
             <Text style={styles.uploadText}>Upload Picture</Text>
