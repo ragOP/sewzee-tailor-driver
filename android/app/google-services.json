@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "891552848121",
+    "project_id": "sewzee-driver-tailor-app",
+    "storage_bucket": "sewzee-driver-tailor-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891552848121:android:67735b8b9fc786e0d0aa28",
+        "android_client_info": {
+          "package_name": "com.sewzee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "891552848121-ikoqg16cm21tgt6gkcivrcs2tmqhvom4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTOr_EtRuSdPetLdNhL7rhwLF1JLU_Mmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "891552848121-ikoqg16cm21tgt6gkcivrcs2tmqhvom4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
